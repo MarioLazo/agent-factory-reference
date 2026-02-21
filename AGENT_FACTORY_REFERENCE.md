@@ -4,7 +4,7 @@
 
 A practical directory of tools, frameworks, datasets, and standards for building AI agents in production environments where compliance matters.
 
-**Curated by Mario Lazo · Evergreen.AI · February 2026**
+**Curated by Mario Lazo · February 2026**
 
 ---
 
@@ -1076,7 +1076,7 @@ This section isn't optional reading — it's the "don't go to jail" section.
 
 | Pillar | Key Obligations |
 |---|---|
-| **Model Inventory** | Evergreen registry with risk ratings, lifecycle status, decommission records; covers all AI/ML models |
+| **Model Inventory** | Living registry with risk ratings, lifecycle status, decommission records; covers all AI/ML models |
 | **Risk-Tiered Governance** | Oversight intensity proportional to model risk; allocate resources accordingly |
 | **Independent Validation** | Required for high-risk models; multi-disciplinary teams (legal, ethics, data science) |
 
@@ -1314,7 +1314,7 @@ _Next scheduled review: **April 2026**_
 | **GitHub Issues** | Corrections, broken links, outdated resources, removal requests |
 | **GitHub Pull Requests** | Add new resources, improve descriptions, fix errors |
 | **GitHub Discussions** | Architecture questions, share production experiences, coordinate |
-| **LinkedIn** | Connect with Mario Lazo at Evergreen.AI |
+| **LinkedIn** | Connect with Mario Lazo |
 
 ---
 
@@ -1430,7 +1430,7 @@ For academic papers:
 ---
 
 _Last updated: February 2026_
-_Maintained by: Mario Lazo · Evergreen.AI_
+_Maintained by: Mario Lazo_
 _License: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — Share with attribution_
 
 > _"83% of enterprise AI pilots fail. Most of them fail for the same reasons. This guide is an attempt to make that number smaller."_

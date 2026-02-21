@@ -103,7 +103,7 @@ You are free to:
 - **Adapt** — remix, transform, and build upon
 
 As long as you:
-- **Give attribution** — credit Mario Lazo / Evergreen.AI
+- **Give attribution** — credit Mario Lazo
 
 ---
 
@@ -118,7 +118,7 @@ GitHub. https://github.com/MarioLazo/agent-factory-reference
 
 ## Maintainer
 
-**Mario Lazo** · [Evergreen.AI](https://evergreen.ai)
+**Mario Lazo**
 
 _"83% of enterprise AI pilots fail. Most of them fail for the same reasons. This guide is an attempt to make that number smaller."_
 
