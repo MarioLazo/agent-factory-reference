@@ -129,7 +129,7 @@ This section isn't optional reading — it's the "don't go to jail" section.
 
 | Pillar | Key Obligations |
 |---|---|
-| **Model Inventory** | Evergreen registry with risk ratings, lifecycle status, decommission records; covers all AI/ML models |
+| **Model Inventory** | Living registry with risk ratings, lifecycle status, decommission records; covers all AI/ML models |
 | **Risk-Tiered Governance** | Oversight intensity proportional to model risk; allocate resources accordingly |
 | **Independent Validation** | Required for high-risk models; multi-disciplinary teams (legal, ethics, data science) |
 
