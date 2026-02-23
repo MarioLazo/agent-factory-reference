@@ -1366,10 +1366,7 @@ Focuses on responsible AI deployment, consumer protection, and systemic risk awa
 
 | Date | What Changed | Contributor |
 |------|-------------|-------------|
-| Feb 2026 | Initial release — Finance, Healthcare, Supply Chain, MCP servers, Ontologies, Papers, Associations | Mario Lazo |
-| Feb 2026 | Added Section 10: Full regulatory reference guide — HIPAA 2025, FDA TPLC, State AI Laws, EU AI Act, OSFI E-23, NIST AI RMF, U.S. Treasury, 2026 NDAA, CCPA/CPRA, CISA CSF 2.0 | Mario Lazo |
-| Feb 2026 | Reorganized structure for searchability; added Companion References section; expanded disclaimer and community contribution guidelines | Mario Lazo |
-| Feb 2026 | Added RAG Blind Spots advisory under Prompt Engineering & RAG — covers chunking misalignment, embedding drift, metadata neglect, recall gaps, stale indexes, and query-document mismatch | Mario Lazo |
+| Feb 2026 | Initial release — Finance, Healthcare, Supply Chain, MCP Servers, Ontologies, Regulatory Reference Guide (Section 10), RAG Blind Spots advisory, Companion References, Papers, Associations, community adoption guidelines | Mario Lazo |
 
 _Next scheduled review: **April 2026**_
 
