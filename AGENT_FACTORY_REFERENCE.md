@@ -190,6 +190,41 @@ This guide focuses on AI agents for regulated industries. These complementary re
 | **Awesome RAG** | Retrieval-augmented generation patterns | [github.com/frutik/Awesome-RAG](https://github.com/frutik/Awesome-RAG) |
 | **LangChain Templates** | Production-ready agent patterns | [github.com/langchain-ai/langchain/tree/master/templates](https://github.com/langchain-ai/langchain/tree/master/templates) |
 
+#### RAG Blind Spots — What Your Pipeline Can't Tell You
+
+<!--
+💡 PLAIN ENGLISH: RAG systems have "blind spots" — just like the areas your
+car mirrors don't cover. The system retrieves information and generates answers,
+but it can't warn you about the things it's missing. These blind spots don't
+cause obvious errors — they quietly degrade answer quality until users stop
+trusting the system.
+-->
+
+Every RAG pipeline has blind spots — areas where retrieval silently fails, context is lost, or the LLM compensates for bad input without raising a flag. Unlike a crashed service, blind spots don't announce themselves. They degrade answer quality gradually, erode user trust, and are especially dangerous in regulated industries where a confidently wrong answer can have real consequences.
+
+**The six most common RAG blind spots:**
+
+| Blind Spot | What Happens | Why You Don't Notice |
+|------------|-------------|----------------------|
+| **Chunking misalignment** | Relevant information is split across chunks, so no single retrieved chunk contains the full answer | The LLM generates a plausible-sounding partial answer instead of failing visibly |
+| **Embedding drift** | As source data evolves, older embeddings no longer accurately represent current content | Retrieval scores stay numerically high even when semantic relevance has degraded |
+| **Metadata neglect** | Chunks lack dates, source authority, or document type — so the retriever can't distinguish a draft from a final policy | All chunks look equally authoritative to the retrieval layer |
+| **Recall gaps** | The retriever returns top-k results that miss relevant documents entirely — high precision, low recall | The LLM confidently answers from whatever it receives; it doesn't know what it wasn't given |
+| **Stale index syndrome** | Source documents are updated but the vector index isn't re-embedded, so answers reflect outdated information | The system returns results quickly and confidently — just from last quarter's data |
+| **Query-document mismatch** | User queries use different terminology than source documents (e.g., "heart attack" vs. "myocardial infarction") | The embedding model may not bridge the vocabulary gap, especially in specialized domains |
+
+**Why this matters more in regulated industries:**
+
+In healthcare, a blind spot in retrieval could surface an outdated clinical guideline. In finance, it could miss a recent regulatory amendment. In supply chain, it could overlook a recalled supplier. The LLM won't tell you it's working with incomplete information — it will generate a confident, well-structured, wrong answer.
+
+**Practical defenses:**
+
+- **Chunk overlap and contextual headers** — Include document title, section heading, and date in every chunk to preserve context across boundaries
+- **Retrieval evaluation pipelines** — Measure recall, not just precision; build test sets of known question-document pairs for your domain
+- **Re-indexing schedules** — Treat your vector index like a cache: set expiration policies and automate re-embedding when source data changes
+- **Domain-specific embedding models** — General-purpose embeddings miss domain vocabulary; fine-tune or choose models trained on your domain corpus
+- **Confidence calibration** — When retrieved chunks have low similarity scores or high variance, surface uncertainty to the user rather than letting the LLM smooth it over
+
 ### AI Safety & Governance
 
 | Resource | What It Covers | Link |
@@ -1300,6 +1335,7 @@ Focuses on responsible AI deployment, consumer protection, and systemic risk awa
 | Feb 2026 | Initial release — Finance, Healthcare, Supply Chain, MCP servers, Ontologies, Papers, Associations | Mario Lazo |
 | Feb 2026 | Added Section 10: Full regulatory reference guide — HIPAA 2025, FDA TPLC, State AI Laws, EU AI Act, OSFI E-23, NIST AI RMF, U.S. Treasury, 2026 NDAA, CCPA/CPRA, CISA CSF 2.0 | Mario Lazo |
 | Feb 2026 | Reorganized structure for searchability; added Companion References section; expanded disclaimer and community contribution guidelines | Mario Lazo |
+| Feb 2026 | Added RAG Blind Spots advisory under Prompt Engineering & RAG — covers chunking misalignment, embedding drift, metadata neglect, recall gaps, stale indexes, and query-document mismatch | Mario Lazo |
 
 _Next scheduled review: **April 2026**_
 
