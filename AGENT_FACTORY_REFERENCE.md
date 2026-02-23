@@ -28,10 +28,12 @@ If it saves one team from rebuilding what already exists, or helps one practitio
 
 ### This Is a Starting Point, Not a Complete Manual
 
-<!-- 
-💡 PLAIN ENGLISH: An "Agent Factory" is a system for building and running 
-AI assistants that can take actions on your behalf — like automating 
-paperwork, analyzing data, or answering questions from your systems.
+<!--
+💡 PLAIN ENGLISH: Why would someone build an "Agent Factory"? Because
+regulated industries have too many manual processes — reviewing filings,
+checking compliance, reconciling records — that are slow, expensive, and
+error-prone. An Agent Factory automates these with AI that connects to
+your real systems, under proper oversight.
 -->
 
 **What is an "Agent Factory"?**
@@ -113,7 +115,7 @@ Listing a tool here means I found it useful or saw it used in production. It doe
 - It meets your compliance requirements
 - It's the best option available
 
-HIPAA, SOC 2, FDA SaMD, SEC/FINRA, EU AI Act, and other frameworks impose obligations that no curated GitHub list can satisfy. You still have to do the work.
+HIPAA, SOC 2, FDA SaMD (Software as a Medical Device), SEC/FINRA, EU AI Act, and other frameworks impose obligations that no curated GitHub list can satisfy. You still have to do the work.
 
 ---
 
@@ -191,6 +193,8 @@ This guide focuses on AI agents for regulated industries. These complementary re
 | **LangChain Templates** | Production-ready agent patterns | [github.com/langchain-ai/langchain/tree/master/templates](https://github.com/langchain-ai/langchain/tree/master/templates) |
 
 #### RAG Blind Spots — What Your Pipeline Can't Tell You
+
+> **Note:** This subsection is intentionally more prescriptive than the reference tables above. RAG blind spots are the most common silent failure mode in regulated AI systems, and no single external resource covers them comprehensively — so we included diagnostic guidance and practical defenses directly.
 
 <!--
 💡 PLAIN ENGLISH: RAG systems have "blind spots" — just like the areas your
@@ -270,6 +274,7 @@ In healthcare, a blind spot in retrieval could surface an outdated clinical guid
 | **8. Datasets** | MIMIC, FAERS, FRED, M5, training data | [→ Section 8](#8--datasets) |
 | **9. Papers & Learning** | Research, associations, where to learn more | [→ Section 9](#9--papers-associations--where-to-learn) |
 | **10. Regulations** | HIPAA, FDA, SEC, EU AI Act, compliance checklists | [→ Section 10](#10--%EF%B8%8F-regulatory-reference-guide) |
+| **RAG Blind Spots** | Common retrieval failures and practical defenses | [→ RAG Blind Spots](#rag-blind-spots--what-your-pipeline-cant-tell-you) |
 | **Community Adoption** | How to contribute, spread the word, improve this guide | [→ Recommendations](#-recommendations-for-maximum-community-adoption) |
 
 ### Search Tips
@@ -286,7 +291,7 @@ In healthcare, a blind spot in retrieval could surface an outdated clinical guid
 
 ---
 
-## 1 · 🤖 AI Agent Frameworks & Orchestration
+## 1 · 🤖 AI Agent Frameworks — Orchestration
 
 <!-- 
 💡 PLAIN ENGLISH: Think of these as the "operating systems" for AI agents.
@@ -538,7 +543,7 @@ Multi-specialist clinical agents running in parallel (cardiologist, pulmonologis
 
 ---
 
-## 4 · 📦 Supply Chain, Warehouse & Distribution
+## 4 · 📦 Supply Chain — Warehouse, Distribution
 
 <!-- 
 💡 PLAIN ENGLISH: These tools help AI manage the flow of goods — from 
@@ -611,9 +616,9 @@ Research implementation of dialogue-driven LLM agents for inventory management t
 | Use Case | Agent Pattern | Key Tools |
 |----------|--------------|-----------|
 | **Demand Forecasting** | Single forecasting agent + time-series tools | Prophet, N-HiTS, TFT, XGBoost |
-| **Inventory Optimization** | EOQ/safety stock agent with real-time data | InventoryPy, frePPLe, custom RL |
+| **Inventory Optimization** | EOQ (Economic Order Quantity)/safety stock agent with real-time data | InventoryPy, frePPLe, custom RL |
 | **Supplier Risk Monitoring** | Multi-agent disruption monitoring with news + KG | LangGraph + NewsAPI + graph DB |
-| **Route Optimization** | Combinatorial optimization agent | OR-Tools (Google), VRPy |
+| **Route Optimization** | Combinatorial optimization agent | OR-Tools (Google), VRPy (Vehicle Routing Problem solver) |
 | **Warehouse Picking** | Embodied agents + robotics interfaces | ROS2, Isaac Sim, OpenAI Gym |
 | **Procurement Automation** | Negotiation agents across supplier APIs | CrewAI, AutoGen |
 | **Demand Sensing** | Real-time signal aggregation agent | Kafka + LLM summarization |
@@ -623,10 +628,10 @@ Research implementation of dialogue-driven LLM agents for inventory management t
 
 ### 4.3 Supply Chain Standards & Ontologies
 
-- **GS1 Standards** (gs1.org) — Global supply chain language: barcodes, RFID, EDI, product data. If your agents identify products, locations, or shipments across trading partners, GS1 is the standard.
+- **[GS1 Standards](https://www.gs1.org/)** — Global supply chain language: barcodes, RFID, EDI, product data. If your agents identify products, locations, or shipments across trading partners, GS1 is the standard.
 - **SCOR Model** — APICS/ASCM framework for supply chain process standardization; defines Plan, Source, Make, Deliver, Return, Enable processes and their KPIs.
 - **UN/CEFACT** — UN trade and logistics standards; EDI message formats for cross-border trade.
-- **Open Supply Hub** (opensupplyhub.org) — Open database of supply chain facility data with standardized identifiers.
+- **[Open Supply Hub](https://opensupplyhub.org/)** — Open database of supply chain facility data with standardized identifiers.
 
 ---
 
@@ -662,6 +667,9 @@ MCP (Model Context Protocol) servers are the **tool layer** of your agent stack 
 
 Real-time access to the full SEC EDGAR database: 10-K/10-Q filings, 8-K events, insider trading (Form 3/4/5), XBRL-parsed financial statements. Responses include source URLs for verification — critical for compliance audits. Exact numeric precision design prevents rounding errors in quantitative workflows.
 
+<details>
+<summary>Quick-start config (Claude Desktop / MCP client)</summary>
+
 ```json
 {
   "mcpServers": {
@@ -673,12 +681,17 @@ Real-time access to the full SEC EDGAR database: 10-K/10-Q filings, 8-K events, 
 }
 ```
 
+</details>
+
 ---
 
 **[EdgarTools + MCP Server](https://github.com/dgunning/edgartools)**
 > _AI-native SEC EDGAR library with built-in MCP server_
 
 10-30x faster than alternatives for EDGAR data extraction. Production MCP server included. Parses XBRL statements, tracks insider trading via Form 4, extracts institutional holdings from 13-F filings. Text formatted for LLM context, not raw HTML.
+
+<details>
+<summary>Quick-start config (Claude Desktop / MCP client)</summary>
 
 ```json
 {
@@ -691,6 +704,8 @@ Real-time access to the full SEC EDGAR database: 10-K/10-Q filings, 8-K events, 
   }
 }
 ```
+
+</details>
 
 ---
 
@@ -780,7 +795,7 @@ Adds **data quality assessment** before agent action — validates completeness,
 
 ---
 
-## 7 · 🧠 Ontologies & Knowledge Graphs
+## 7 · 🧠 Ontologies — Knowledge Graphs
 
 <!-- 
 💡 PLAIN ENGLISH: An "ontology" is basically a shared vocabulary with 
@@ -801,7 +816,7 @@ Ontologies are the **semantic foundation** of domain-aware agents. Without them,
 **[FIBO — Financial Industry Business Ontology](https://github.com/edmcouncil/fibo)**
 > _Standard ontology for financial contracts, instruments, and entities_
 
-Developed post-2008 crisis when it became clear firms were using the same terms with incompatible meanings. Standardized by OMG; covers business entities, contracts, securities, derivatives, market data, regulatory reporting. Published in OWL/RDF for direct use in knowledge graphs. Mandatory for agents supporting **regulatory reporting** (Basel III, MiFID II, Dodd-Frank).
+Developed post-2008 crisis when it became clear firms were using the same terms with incompatible meanings. Standardized by OMG; covers business entities, contracts, securities, derivatives, market data, regulatory reporting. Published in OWL/RDF (Web Ontology Language / Resource Description Framework) for direct use in knowledge graphs. Mandatory for agents supporting **regulatory reporting** (Basel III capital requirements, MiFID II — Markets in Financial Instruments Directive, Dodd-Frank Wall Street Reform Act).
 
 - Published: [spec.edmcouncil.org/fibo](https://spec.edmcouncil.org/fibo/)
 - Hugging Face: [FIBO 2023 Q3](https://huggingface.co/datasets/wikipunk/fibo2023Q3)
@@ -844,11 +859,21 @@ Comprehensive catalog including Hetionet, DrugBank, SPOKE, and Monarch Initiativ
 
 ## 8 · 📊 Datasets
 
+<!--
+💡 PLAIN ENGLISH: These are the real-world data collections you can use
+to train, test, and validate your AI agents. Some are freely available;
+others require registration or formal data use agreements. Always check
+access requirements before using any dataset — especially in healthcare,
+where mishandling patient data can have legal consequences.
+-->
+
+> **In simple terms:** The training and testing data your AI agents need — organized by industry, with access requirements and compliance notes.
+
 ### 8.1 Healthcare
 
 | Dataset | Access | Description | Compliance Note |
 |---------|--------|-------------|-----------------|
-| **MIMIC-IV** | [physionet.org](https://physionet.org/content/mimiciv/) | De-identified ICU EHR data (2008-2019): vitals, labs, meds, notes, diagnoses. 40K+ patients. | ⚠️ Requires DUA. Do NOT send to cloud LLM APIs — local models only. |
+| **MIMIC-IV** | [physionet.org](https://physionet.org/content/mimiciv/) | De-identified ICU EHR data (2008-2019): vitals, labs, meds, notes, diagnoses. 40K+ patients. | ⚠️ Requires DUA (Data Use Agreement). Do NOT send to cloud LLM APIs — local models only. |
 | **MIMIC-CXR** | [physionet.org](https://physionet.org/content/mimic-cxr/) | 227,835 chest X-rays with de-identified radiology reports. | ⚠️ Same DUA. |
 | **eICU Collaborative Research DB** | [physionet.org](https://physionet.org/content/eicu-crd/) | Multi-center ICU data from 200K+ stays. | Credentialed access required. |
 | **MIMIC Code Repository** | [github.com/MIT-LCP/mimic-code](https://github.com/MIT-LCP/mimic-code) | SQL/Python code for MIMIC analysis; BigQuery and AWS available. | Open-source; data requires DUA. |
@@ -880,7 +905,16 @@ Comprehensive catalog including Hetionet, DrugBank, SPOKE, and Monarch Initiativ
 
 ---
 
-## 9 · 📚 Papers, Associations & Where to Learn
+## 9 · 📚 Papers, Associations — Where to Learn
+
+<!--
+💡 PLAIN ENGLISH: This section collects the most important research papers,
+professional organizations, and publications in each domain. If you need
+to justify a technical decision to leadership, cite a regulation to a
+vendor, or find the right professional community — start here.
+-->
+
+> **In simple terms:** The research, organizations, and publications that matter most — so you can learn from what's already been studied and connect with people who've done it.
 
 ### 9.1 Landmark Academic Papers
 
@@ -954,21 +988,21 @@ Comprehensive catalog including Hetionet, DrugBank, SPOKE, and Monarch Initiativ
 
 | Organization | Domain | What They Do |
 |-------------|--------|--------------|
-| **AMIA** (amia.org) | Healthcare | American Medical Informatics Association — professional home for clinical informatics; annual symposium is the top clinical AI conference |
-| **HIMSS** (himss.org) | Healthcare | Health IT industry body; publishes Digital Health reports |
-| **HL7 International** (hl7.org) | Healthcare | Develops and maintains FHIR and interoperability standards |
-| **IEEE EMBS** (embs.org) | Healthcare | IEEE Engineering in Medicine and Biology Society; publishes J-BHI |
-| **NLM / NIH** (nlm.nih.gov) | Healthcare | Maintains UMLS, MeSH, PubMed; public infrastructure for biomedical AI |
-| **GARP** (garp.org) | Finance | Global Association of Risk Professionals |
-| **PRMIA** (prmia.org) | Finance | Professional Risk Managers' International Association |
-| **EDM Council** (edmcouncil.org) | Finance | Maintains FIBO; drives data governance standards |
-| **ISDA** (isda.org) | Finance | International Swaps and Derivatives Association; derivatives data standards |
-| **ASCM** (ascm.org) | Supply Chain | Association for Supply Chain Management; publishes SCOR framework |
-| **GS1** (gs1.org) | Supply Chain | Global supply chain standards body (barcodes, RFID, EDI) |
-| **MIT CTL** (ctl.mit.edu) | Supply Chain | MIT Center for Transportation and Logistics; leading academic research |
-| **CSCMP** (cscmp.org) | Supply Chain | Council of Supply Chain Management Professionals |
-| **MLOps Community** (mlops.community) | Cross-Industry | Practitioners forum for production ML/AI |
-| **IEEE** (ieee.org) | Cross-Industry | IEEE AI standards working groups; relevant for regulated AI deployment |
+| **[AMIA](https://amia.org/)** | Healthcare | American Medical Informatics Association — professional home for clinical informatics; annual symposium is the top clinical AI conference |
+| **[HIMSS](https://www.himss.org/)** | Healthcare | Health IT industry body; publishes Digital Health reports |
+| **[HL7 International](https://www.hl7.org/)** | Healthcare | Develops and maintains FHIR and interoperability standards |
+| **[IEEE EMBS](https://www.embs.org/)** | Healthcare | IEEE Engineering in Medicine and Biology Society; publishes J-BHI |
+| **[NLM / NIH](https://www.nlm.nih.gov/)** | Healthcare | Maintains UMLS, MeSH, PubMed; public infrastructure for biomedical AI |
+| **[GARP](https://www.garp.org/)** | Finance | Global Association of Risk Professionals |
+| **[PRMIA](https://www.prmia.org/)** | Finance | Professional Risk Managers' International Association |
+| **[EDM Council](https://www.edmcouncil.org/)** | Finance | Maintains FIBO; drives data governance standards |
+| **[ISDA](https://www.isda.org/)** | Finance | International Swaps and Derivatives Association; derivatives data standards |
+| **[ASCM](https://www.ascm.org/)** | Supply Chain | Association for Supply Chain Management; publishes SCOR framework |
+| **[GS1](https://www.gs1.org/)** | Supply Chain | Global supply chain standards body (barcodes, RFID, EDI) |
+| **[MIT CTL](https://ctl.mit.edu/)** | Supply Chain | MIT Center for Transportation and Logistics; leading academic research |
+| **[CSCMP](https://www.cscmp.org/)** | Supply Chain | Council of Supply Chain Management Professionals |
+| **[MLOps Community](https://mlops.community/)** | Cross-Industry | Practitioners forum for production ML/AI |
+| **[IEEE](https://www.ieee.org/)** | Cross-Industry | IEEE AI standards working groups; relevant for regulated AI deployment |
 
 ---
 
@@ -1236,7 +1270,7 @@ Focuses on responsible AI deployment, consumer protection, and systemic risk awa
 |---|---|
 | **SBOM (Software Bill of Materials)** | Full inventory of software components in AI systems; validate no vulnerable or prohibited dependencies |
 | **Third-Party Risk Scoring** | Continuous vendor risk monitoring; supply chain attacks doubled in 2025 |
-| **Zero Trust Architecture** | Assume breach; verify every access request including agent-to-agent calls |
+| **Zero Trust Architecture** | Assume breach; verify every access request — no implicit trust between systems, including agent-to-agent calls |
 | **Incident Response Plan** | Defined playbooks for supply chain-specific attack vectors (ransomware, data exfiltration) |
 
 **Agent Factory Actions**:
